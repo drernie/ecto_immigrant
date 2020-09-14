@@ -5,6 +5,15 @@ defmodule EctoImmigrant.TestAdapter do
 
   defmacro __before_compile__(_opts), do: :ok
 
+  def init(config) do
+    {:ok, child_spec(nil, config),%{}}
+  end
+
+  def checkout(_adapter_meta, _config, function) do
+    function.()
+  end
+
+
   def ensure_all_started(_, _) do
     {:ok, []}
   end

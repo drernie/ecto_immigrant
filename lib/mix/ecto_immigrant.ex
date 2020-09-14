@@ -1,5 +1,5 @@
 defmodule Mix.EctoImmigrant do
-  import Mix.Ecto
+  #import Mix.Ecto
   # Conveniences for writing Mix.Tasks in EctoImmigrant.
   @moduledoc false
 
@@ -7,8 +7,8 @@ defmodule Mix.EctoImmigrant do
   Gets the data migrations path from a repository.
   """
   @spec data_migrations_path(Ecto.Repo.t()) :: String.t()
-  def data_migrations_path(repo) do
-    Path.join(source_repo_priv(repo), "data_migrations")
+  def data_migrations_path(_repo) do
+    Path.join("priv/repo", "data_migrations")
   end
 
   @doc """

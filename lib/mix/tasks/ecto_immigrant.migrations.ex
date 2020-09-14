@@ -2,6 +2,7 @@ defmodule Mix.Tasks.EctoImmigrant.Migrations do
   use Mix.Task
   import Mix.Ecto
   import Mix.EctoImmigrant
+  alias Mix.Triplex
 
   @shortdoc "Displays the repository data migration status"
 
@@ -38,7 +39,7 @@ defmodule Mix.Tasks.EctoImmigrant.Migrations do
       Enum.map(repos, fn repo ->
         ensure_repo(repo, args)
         ensure_data_migrations_path(repo)
-        {:ok, pid, _} = ensure_started(repo, all: true)
+        {:ok, pid, _} = Triplex.ensure_started(repo, all: true)
 
         repo_status = migrations.(repo, data_migrations_path(repo))
 

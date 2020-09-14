@@ -2,6 +2,7 @@ defmodule Mix.Tasks.EctoImmigrant.Migrate do
   use Mix.Task
   import Mix.Ecto
   import Mix.EctoImmigrant
+  alias Mix.Triplex
 
   @shortdoc "Runs the repository data migrations"
 
@@ -33,7 +34,7 @@ defmodule Mix.Tasks.EctoImmigrant.Migrate do
     Enum.each(repos, fn repo ->
       ensure_repo(repo, args)
       ensure_data_migrations_path(repo)
-      {:ok, pid, apps} = ensure_started(repo, opts)
+      {:ok, pid, apps} = Triplex.ensure_started(repo, opts)
 
       pool = repo.config[:pool]
 
@@ -45,7 +46,7 @@ defmodule Mix.Tasks.EctoImmigrant.Migrate do
         end
 
       pid && repo.stop(pid)
-      restart_apps_if_migrated(apps, migrated)
+      Triplex.restart_apps_if_migrated(apps, migrated)
     end)
   end
 end
